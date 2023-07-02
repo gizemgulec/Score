@@ -1,31 +1,7 @@
-import { useState } from 'react';
-import {TextInput, View, StyleSheet, Alert} from 'react-native';
+import {TextInput, View, StyleSheet} from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 
-function StartGameScreen({onPickNumber}) {
-    const [enteredNumber, setEnteredNumber] = useState('');
-
-    function numberInputHandler(enteredText) {
-        setEnteredNumber(enteredText);
-    }
-
-    function resetInputHandler() {
-        setEnteredNumber();
-    }
-
-    function confirmInputHandler() {
-        const chosenNumber = parseInt(enteredNumber);
-
-        if(isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
-            //show alert
-            Alert.alert('Invalid Number', 'Number has to be a number between 1 and 99');
-            [{ text: 'Okay', style: 'destructive', onPress: resetInputHandler}]
-            return;
-        }
-
-        onPickNumber(chosenNumber);
-    }
-
+function StartGameScreen() {
     return (
         <View style={styles.inputContainer}>
             <TextInput 
@@ -34,17 +10,9 @@ function StartGameScreen({onPickNumber}) {
                 keyboardType="number-pad"
                 autoCapitalize='none'
                 autoCorrect={false}
-                onChangeText={numberInputHandler}
-                value={enteredNumber}
             />
-            <View style={styles.buttonsContainer}>
-                <View style={styles.buttonContainer}>
-                    <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
-                </View>
-                <View style={styles.buttonContainer}>
-                    <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-                </View>
-            </View>
+            <PrimaryButton>Reset</PrimaryButton>
+            <PrimaryButton>Confirm</PrimaryButton>
         </View>
     );
 }
@@ -54,12 +22,10 @@ export default StartGameScreen;
 const styles = StyleSheet.create({
     inputContainer: {
         //flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         marginHorizontal: 24,
         marginTop: 100,
         padding: 16,
-        backgroundColor: '#3b021f',
+        backgroundColor: '#72063c',
         borderRadius: 8,
         elevation: 4,
         shadowColor: 'black',
@@ -77,11 +43,5 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         fontWeight: 'bold',
         textAlign: 'center'
-    },
-    buttonsContainer: {
-        flexDirection: 'row'
-    },
-    buttonContainer: {
-        flex: 1
     }
 });
